@@ -1,0 +1,63 @@
+<div class="container my-5">
+  <div class="row">
+    <!-- Main content -->
+    <div class="col-lg-8">
+      <img
+        src="{{blog.image_url}}"
+        class="img-fluid rounded mb-4"
+        alt="Blog Image"
+      />
+      <h2 class="fw-bold mb-3">{{blog.title}}</h2>
+      <div class="d-flex align-items-center mb-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          fill="currentColor"
+          class="bi bi-person-fill-check mx-3"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m1.679-4.493-1.335 2.226a.75.75 0 0 1-1.174.144l-.774-.773a.5.5 0 0 1 .708-.708l.547.548 1.17-1.951a.5.5 0 1 1 .858.514M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0"
+          />
+          <path
+            d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"
+          />
+        </svg>
+        <div>
+          <span class="fw-bold">{{blog.author}}</span> in News <br />
+          <small class="text-muted">{{blog.created_at}}</small>
+        </div>
+      </div>
+
+      <p>{{blog.content|safe}}</p>
+    </div>
+
+    <!-- Sidebar: Recent Posts -->
+    {% if recent_blogs %}
+    <div class="col-lg-4">
+      <div>
+        <h6 class="text-dark fw-bold mb-4">Recent Posts</h6>
+        {% for blog in recent_blogs %}
+        <div class="d-flex align-items-start mb-3">
+          <span class="me-2 fw-bold text-secondary">{{forloop.counter}}</span>
+          <div>
+            <a
+              href="{{blog.get_absolute_url}}"
+              class="text-dark text-decoration-none"
+            >
+              <p class="mb-0 fw-bold">{{blog.title}}</p>
+              <small class="text-muted"
+                >{{blog.author}} in News • {{blog.created_at}}</small
+              >
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+        <a href="{% url 'blogs' %}" class="text-success fw-bold"
+          >SEE ALL Posts &gt;</a
+        >
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

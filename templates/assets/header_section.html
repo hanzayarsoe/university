@@ -1,0 +1,112 @@
+<!-- Navbar Start -->
+<nav
+  class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0"
+>
+  <a
+    href="{% url 'home' %}"
+    class="navbar-brand d-flex align-items-center px-4 px-lg-5"
+  >
+    <h2
+      class="m-0 text-primary"
+      style="font-family: Permanent Marker, Arial, Helvetica, sans-serif"
+    >
+      <img
+        src="{{general_info.logo_url}}"
+        alt="{{general_info.university_name}}"
+        width="70px"
+      />{{general_info.short_name}}
+    </h2>
+  </a>
+  <button
+    type="button"
+    class="navbar-toggler me-4"
+    data-bs-toggle="collapse"
+    data-bs-target="#navbarCollapse"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav ms-auto p-4 p-lg-0">
+      <a
+        href="{% url 'home' %}"
+        class="nav-item nav-link {% if request.path == '/' %}active{% endif %}"
+        >Home</a
+      >
+      <a
+        href="{% url 'about' %}"
+        class="nav-item nav-link {% if request.path == '/about/' %}active{% endif %}"
+        >About</a
+      >
+      <a
+        href="{% url 'courses' %}"
+        class="nav-item nav-link {% if request.path == '/courses/' %}active{% endif %}"
+        >Courses</a
+      >
+      <div class="nav-item dropdown">
+        <a
+          href="#"
+          class="nav-link dropdown-toggle {% if request.path == '/facilities/' %}active{% endif %}"
+          data-bs-toggle="dropdown"
+        >
+          Facilities & Staffs
+        </a>
+
+        <!-- Academic Departments Start-->
+        <div class="dropdown-menu fade-down m-0">
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-item has-submenu"
+              >Departments of Academic Excellence</a
+            >
+            {% if academic_departments %}
+            <div class="dropdown-menu fade-down m-0">
+              {% for department in academic_departments %}
+              <a
+                href="{% url 'department' department_type='academic' slug=department.slug %}"
+                class="dropdown-item {% if request.path == department.get_absolute_url %}active{% endif %}"
+              >
+                {{ department.name }}
+              </a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="nav-item dropdown">
+            <a href="#" class="dropdown-item has-submenu"
+              >Departments of Management Studies</a
+            >
+            {% if management_departments %}
+            <div class="dropdown-menu fade-down m-0">
+              {% for department in management_departments %}
+              <a
+                href="{% url 'department' department_type='management' slug=department.slug %}"
+                class="dropdown-item {% if request.path == department.get_absolute_url %}active{% endif %}"
+              >
+                {{ department.name }}
+              </a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+
+          <a
+            href="{% url 'testimonial' %}"
+            class="dropdown-item {% if request.path == '/testimonial/' %}active{% endif %}"
+            >Testimonial</a
+          >
+        </div>
+      </div>
+      <a
+        href="{% url 'contact' %}"
+        class="nav-item nav-link {% if request.path == '/contact/' %}active{% endif %}"
+        >Contact</a
+      >
+      <a
+        href="{% url 'blogs' %}"
+        class="nav-item nav-link {% if request.path == '/blogs/' %}active{% endif %}"
+        >Blogs</a
+      >
+    </div>
+  </div>
+</nav>
+<!-- Navbar End -->
