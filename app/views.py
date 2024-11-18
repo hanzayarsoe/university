@@ -13,8 +13,9 @@ from app.models import ImageShowcase, ServiceSection, AcademicMember, AcademicDe
 def index(request):
     images = ImageShowcase.objects.all()
     service_sections = ServiceSection.objects.all()
-    academic_members = AcademicMember.objects.filter(
-        academic_department__name="Executive")
+    department = AcademicDepartment.objects.get(name="Executive")
+    members = AcademicMember.objects.filter(
+        academic_department__name="Executive").order_by('order')
     blogs = Blog.objects.all().order_by('-created_at')[:3]
     testimonials = Testimonial.objects.all()
 
@@ -24,16 +25,18 @@ def index(request):
     for index, service_section in enumerate(service_sections):
         service_section.delay = index * 0.2
 
-    for index, academic_member in enumerate(academic_members):
+    for index, academic_member in enumerate(members):
         academic_member.delay = index * 0.2
 
     context = {
         "images": images,
         "service_sections": service_sections,
-        "academic_members": academic_members,
+        'department': department,
+        'all_members': members,
         "blogs": blogs,
         "testimonials": testimonials
     }
+
     return render(request, "index.html", context)
 
 
