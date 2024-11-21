@@ -13,7 +13,10 @@ from app.models import ImageShowcase, ServiceSection, AcademicMember, AcademicDe
 def index(request):
     images = ImageShowcase.objects.all()
     service_sections = ServiceSection.objects.all()
-    department = AcademicDepartment.objects.get(name="Executive")
+    try:
+        department = AcademicDepartment.objects.get(name="Executive")
+    except AcademicDepartment.DoesNotExist:
+        department = None
     members = AcademicMember.objects.filter(
         academic_department__name="Executive").order_by('order')
     blogs = Blog.objects.all().order_by('-created_at')[:3]
