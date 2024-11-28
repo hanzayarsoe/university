@@ -241,7 +241,7 @@ class CourseCategory(models.Model):
 
 class Course(models.Model):
     name = models.CharField(max_length=200, unique=True)
-    code = models.CharField(max_length=10, unique=True)  # e.g., "CS101"
+    code = models.CharField(max_length=10, unique=True)
     description = models.TextField(blank=True, null=True)
     img_url = models.URLField(blank=True, null=True)
     credits = models.PositiveIntegerField(blank=True, null=True)
