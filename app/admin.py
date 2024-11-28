@@ -20,12 +20,24 @@ class GeneralInfoAdmin(admin.ModelAdmin):
     ]
     readonly_fields = ['created_at', 'updated_at']
 
+    def has_add_permission(self, request):
+        count = GeneralInfo.objects.count()
+        if count >= 1:
+            return False
+        return super().has_add_permission(request)
+
 
 @admin.register(Gallery)
 class GalleryAdmin(admin.ModelAdmin):
     list_display = [
         'image_name'
     ]
+
+    def has_add_permission(self, request):
+        count = Gallery.objects.count()
+        if count >= 1:
+            return False
+        return super().has_add_permission(request)
 
 
 @admin.register(ImageShowcase)

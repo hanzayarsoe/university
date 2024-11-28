@@ -39,11 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'livereload',
     'django.contrib.staticfiles',
     'app',
     'adminsortable2',
-    'ckeditor',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'livereload.middleware.LiveReloadScript',
 ]
 
 ROOT_URLCONF = 'university.urls'
@@ -147,3 +145,16 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'hanzayarsoe404@gmail.com'
 EMAIL_HOST_PASSWORD = "enter-your-app-password-here"
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": 500,
+    "width": "auto",
+    "menubar": True,
+    "plugins": "image table link lists code preview",
+    "toolbar": (
+        "undo redo | fontfamily fontsize | bold italic underline | "
+        "alignleft aligncenter alignright alignjustify | "
+        "bullist numlist outdent indent | link image table | code preview"
+    ),
+    "branding": False,
+}

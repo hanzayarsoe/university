@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.urls import reverse
-from ckeditor.fields import RichTextField
+from tinymce.models import HTMLField
 # Create your models here.
 
 
@@ -23,7 +23,9 @@ class GeneralInfo(models.Model):
     instagram_url = models.URLField(null=True, blank=True)
     viber_url = models.URLField(null=True, blank=True)
     youtube_url = models.URLField(null=True, blank=True)
-    about_us = models.TextField(null=True, blank=True)
+    about_us = models.TextField(
+        null=True, blank=True, default="About University")
+    about_us_image = models.URLField(null=True, blank=True)
     short_description = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
@@ -33,8 +35,14 @@ class GeneralInfo(models.Model):
 
 
 class Gallery(models.Model):
-    image_name = models.CharField(max_length=255, null=True, blank=True)
-    image_url = models.URLField(max_length=255, null=True, blank=True)
+    image_name = models.CharField(
+        max_length=255, null=True, blank=True, default="Gallery")
+    image_url_1 = models.URLField(max_length=255, null=True, blank=True)
+    image_url_2 = models.URLField(max_length=255, null=True, blank=True)
+    image_url_3 = models.URLField(max_length=255, null=True, blank=True)
+    image_url_4 = models.URLField(max_length=255, null=True, blank=True)
+    image_url_5 = models.URLField(max_length=255, null=True, blank=True)
+    image_url_6 = models.URLField(max_length=255, null=True, blank=True)
 
     def __str__(self) -> str:
         return self.image_name
@@ -69,12 +77,16 @@ class Position(models.Model):
 class AcademicDepartment(models.Model):
     name = models.CharField(max_length=255, unique=True, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
+    department_type = models.CharField(max_length=50, default='academic')
+
+    def get_absolute_url(self):
+        return reverse(
+            'department',
+            kwargs={'department_type': self.department_type, 'slug': self.slug}
+        )
 
     def __str__(self) -> str:
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('academic_department', args=[self.slug])
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -109,12 +121,16 @@ class AcademicMember(models.Model):
 class ManagementDepartment(models.Model):
     name = models.CharField(max_length=255, unique=True, blank=True, null=True)
     slug = models.SlugField(unique=True, blank=True, null=True)
+    department_type = models.CharField(max_length=50, default='management')
+
+    def get_absolute_url(self):
+        return reverse(
+            'department',
+            kwargs={'department_type': self.department_type, 'slug': self.slug}
+        )
 
     def __str__(self) -> str:
         return self.name
-
-    def get_absolute_url(self):
-        return reverse('management_department', args=[self.slug])
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -178,7 +194,7 @@ class Blog(models.Model):
     title = models.CharField(max_length=255)
     category = models.ForeignKey(
         'Category', on_delete=models.SET_NULL, null=True, blank=True)
-    content = RichTextField(blank=True, null=True)
+    content = HTMLField(blank=True, null=True)
     author = models.ForeignKey(
         'Author', on_delete=models.SET_NULL, blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)

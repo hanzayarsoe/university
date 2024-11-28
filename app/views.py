@@ -44,10 +44,18 @@ def index(request):
 
 def about(request):
     service_sections = ServiceSection.objects.all()
+    try:
+        department = AcademicDepartment.objects.get(name="Executive")
+    except AcademicDepartment.DoesNotExist:
+        department = None
+    members = AcademicMember.objects.filter(
+        academic_department__name="Executive").order_by('order')
     for index, service_section in enumerate(service_sections):
         service_section.delay = index * 0.2
     context = {
-        "service_sections": service_sections
+        "service_sections": service_sections,
+        "department": department,
+        "all_members": members
     }
     return render(request, "about.html", context)
 

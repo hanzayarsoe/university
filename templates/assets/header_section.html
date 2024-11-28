@@ -45,16 +45,18 @@
       <div class="nav-item dropdown">
         <a
           href="#"
-          class="nav-link dropdown-toggle {% if request.path == '/facilities/' %}active{% endif %}"
+          class="nav-link dropdown-toggle {% if request.path in academic_urls or request.path in management_urls %}active{% endif %}"
           data-bs-toggle="dropdown"
         >
           Facilities & Staffs
         </a>
 
-        <!-- Academic Departments Start-->
+        <!-- Academic Departments Start -->
         <div class="dropdown-menu fade-down m-0">
           <div class="nav-item dropdown">
-            <a href="#" class="dropdown-item has-submenu"
+            <a
+              href="#"
+              class="dropdown-item has-submenu {% if request.path in academic_urls %}active{% endif %}"
               >Departments of Academic Excellence</a
             >
             {% if academic_departments %}
@@ -72,7 +74,9 @@
           </div>
 
           <div class="nav-item dropdown">
-            <a href="#" class="dropdown-item has-submenu"
+            <a
+              href="#"
+              class="dropdown-item has-submenu {% if request.path in management_urls %}active{% endif %}"
               >Departments of Management Studies</a
             >
             {% if management_departments %}
@@ -96,6 +100,7 @@
           >
         </div>
       </div>
+
       <a
         href="{% url 'contact' %}"
         class="nav-item nav-link {% if request.path == '/contact/' %}active{% endif %}"
