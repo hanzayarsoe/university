@@ -248,7 +248,7 @@ class Course(models.Model):
     duration = models.CharField(max_length=50)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-    is_popular = models.BooleanField(default=False)
+    is_popular = models.BooleanField(default=True)
 
     # New category field, linking Course to Category
     category = models.ForeignKey(
